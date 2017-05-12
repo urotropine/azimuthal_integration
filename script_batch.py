@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.interpolate import griddata
 import sys
+import pylab
 
 for i in ['_529', 'I_626']:
 
@@ -24,6 +25,9 @@ for i in ['_529', 'I_626']:
     z = data
 
     image = data.reshape(shape)
+    img_name = i + '.png'
+    plt.imshow(image, cmap = 'jet')
+    pylab.savefig(img_name,bbox_inches = 'tight' )
 
     file_name = i + '.txt'
     sys.stdout = open(file_name, 'w')
