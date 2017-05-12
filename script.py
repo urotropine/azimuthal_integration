@@ -4,9 +4,10 @@ from scipy.interpolate import griddata
 import sys
 
 input_filename1 = "sampleXXIII_626_000.img"
+#input_filename1 = "sampleXXII_529_000.img"
 input_filename2 = "emptrycelll_405_000.img" 
 shape = (4096, 4096)
-dtype = np.dtype('>u2')
+dtype = np.dtype('u2')
 
 fid1 = open(input_filename1, 'rb')
 fid2 = open(input_filename2, 'rb')
@@ -24,31 +25,21 @@ image = data.reshape(shape)
 
 sys.stdout = open('name_output.txt', 'w')
 
-center_x =
-center_y = 
-R1 =
-R2 =
+center_x = 2024
+center_y = 2984
+R1 = 1752
+R2 = 1802
+num = 180
+step = np.pi/num
 
-angle = np.arange(0, np.pi/2, np.pi/180)
+angle = np.arange(0, step+np.pi, step)
 for phi in angle:
     
-    xi = np.linspace((center_x + R1 * np.cos(phi)),(center_x + R2 * np.cos(phi)),500)
-    yi = np.linspace((center_y + R1 * np.cos(phi)),(center_y + R2 * np.cos(phi)),500)
+    yi = np.linspace((center_x + R1 * np.cos(phi)),(center_x + R2 * np.cos(phi)),250)
+    xi = np.linspace((center_y - R1 * np.sin(phi)),(center_y - R2 * np.sin(phi)),250)
     zi = griddata((x, y), z, (xi, yi), method = 'nearest')
     integral = np.sum(zi)
   
     print phi, integral
-    
-sys.stdout.close()
-'''
-plt.subplot(211)
-plt.imshow(image, cmap = "gray")
-plt.plot(xi, yi, '-', ms = 2)
-#plt.figure(figsize=(8,8))
 
-plt.subplot(212)
-plt.plot(xi, zi, '--', ms = 2)
-plt.xlim(0,4096)
-plt.figure(figsize=(15,5))
-plt.show()
-'''
+sys.stdout.close()
